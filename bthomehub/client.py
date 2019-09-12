@@ -181,6 +181,365 @@ class BtHomeClient(object):
 
         return self._parse_homehub_response(data, only_active)
 
+    def get_values(self) -> list:
+        """
+        Returns the list of connected devices
+
+        :param only_active: a flag indicating whether only currently active (connected) devices should be returned.
+        Default `True`
+        :return: a dictionary containing all the devices connected to the bt home hub
+        """
+
+        if self._authentication is None:
+            raise AuthenticationException('Client not authenticated. Please authenticate first, using "authenticated '
+                                          'function')
+
+        list_cookie_obj = {
+            'req_id': self._authentication.request_id,
+            'sess_id': self._authentication.session_id,
+            'basic': False,
+            'user': 'guest',
+            'dataModel': {
+                'name': 'Internal',
+                'nss': [
+                    {
+                        'name': 'gtw',
+                        'uri': 'http://sagemcom.com/gateway-data'
+                    }
+                ]
+            },
+            'ha1': '2d9a6f39b6d41d8cd98f00b204e9800998ecf8427eba8d73fbd3de28879da7dd',
+            'nonce': self._authentication.server_nonce
+        }
+
+        self._authentication.request_id += 1
+
+        list_req_obj = {
+            'request': {
+                'id': self._authentication.request_id,
+                'session-id': self._authentication.session_id,
+                'priority': False,
+                'actions': [
+                    {
+            "id":0,
+            "method":"getValue",
+            "xpath":"Device/DeviceInfo/ExternalFirmwareVersion",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+{
+            "id":1,
+            "method":"getValue",
+            "xpath":"Device/Services/DeviceConfig/LastFirmwareUpgrade",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":2,
+            "method":"getValue",
+            "xpath":"Device/DSL/Channels/Channel[@uid=\"1\"]/DownstreamCurrRate",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":3,
+            "method":"getValue",
+            "xpath":"Device/DSL/Channels/Channel[@uid=\"1\"]/UpstreamCurrRate",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":4,
+            "method":"getValue",
+            "xpath":"Device/IP/Interfaces/Interface[Alias=\"IP_DATA\"]/LastChange",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+		 {
+            "id":5,
+            "method":"getValue",
+            "xpath":"Device/Hosts/Hosts/Host/BlacklistedSchedule",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":6,
+            "method":"getValue",
+            "xpath":"Device/IP/Interfaces/Interface[Alias=\"IP_DATA\"]/Stats/BytesSent",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":7,
+            "method":"getValue",
+            "xpath":"Device/IP/Interfaces/Interface[Alias=\"IP_DATA\"]/Stats/BytesReceived",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":8,
+            "method":"getValue",
+            "xpath":"Device/Managers/HubLightControl/FrontLEDColor",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+		 {
+            "id":9,
+            "method":"getValue",
+            "xpath":"Device/Services/OpenWiFi/UIEnabled",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":10,
+            "method":"getValue",
+            "xpath":"Device/IP/Interfaces/Interface[Alias=\"IP_DATA\"]/IPv4Addresses/IPv4Address/IPGateway",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":11,
+            "method":"getValue",
+            "xpath":"Device/IP/Interfaces/Interface[Alias=\"IP_DATA\"]/IPv4Addresses/IPv4Address[Alias=\"IP_DATA_ADDRESS\"]/Dns",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":12,
+            "method":"getValue",
+            "xpath":"Device/IP/Interfaces/Interface[Alias=\"IP_DATA\"]/IPv4Addresses/IPv4Address[Alias=\"IP_DATA_ADDRESS\"]/IPAddress",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":13,
+            "method":"getValue",
+            "xpath":"Device/IP/Interfaces/Interface[Alias='IP_DATA']/Status",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":14,
+            "method":"getValue",
+            "xpath":"Device/DeviceInfo/SerialNumber",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":15,
+            "method":"getValue",
+            "xpath":"Device/Services/DeviceConfig/LastSuccesfulWanType",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+		 {
+            "id":16,
+            "method":"getValue",
+            "xpath":"Device/DeviceInfo/UpTime",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":17,
+            "method":"getValue",
+            "xpath":"Device/DeviceInfo/HardwareVersion",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+		 {
+            "id":18,
+            "method":"getValue",
+            "xpath":"Device/Services/OpenWiFi/OpenWifiOptedIn",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+
+                  {
+            "id":19,
+            "method":"getValue",
+            "xpath":"Device/DSL/Lines/Line[Alias=\"DSL0\"]/Status",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+		 {
+            "id":20,
+            "method":"getValue",
+            "xpath":"Device/Ethernet/Interfaces/Interface[Alias=\"PHY6_WAN\"]/Status",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+		 {
+            "id":21,
+            "method":"getValue",
+            "xpath":"Device/PPP/Interfaces/Interface[Alias='PPP_DSL_DATA']/Status",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+		 {
+            "id":22,
+            "method":"getValue",
+            "xpath":"Device/PPP/Interfaces/Interface[Alias=\"PPP_DSL_DATA\"]/ConnectionStatus",
+            "options":            {
+               "capability-flags":               {
+                  "interface":True
+               },
+
+            },
+
+         },
+                ],
+                'cnonce': self._authentication.client_nonce,
+                'auth-key': self._authentication.get_auth_key()
+            }
+        }
+
+        headers = {
+            "Cookie": "lang=en; session=" + quote(json.dumps(list_cookie_obj).encode("utf-8"))
+        }
+
+        request = "req=" + quote(json.dumps(list_req_obj, sort_keys=True).encode("utf-8"))
+        response = requests.post(url=self.url, data=request, headers=headers, timeout=self.timeout)
+        if response.status_code == 401:
+            raise AuthenticationException('Failed to get list of devices. Session expired')
+        elif response.status_code != 200:
+            raise ResponseException('Failed to get list of devices. Got a %s' % response.status_code)
+
+        data = json.loads(response.text)
+        if not self._is_successful(data):
+            if self._is_invalid_user_session(data):
+                self.authenticate()
+            raise ResponseException('Failed to get list of devices. Reason: %s' % data['reply']['error']['description'])
+
+        # We don't let the request id grow exponentially
+        if self._authentication.request_id > 100000:
+            self.authenticate()
+            self._authentication.request_id = 0
+
+        return self._parse_homehub_response_values(data)
+
     @staticmethod
     def _is_successful(data):
         return data and data.get('reply', {}).get('error', {}).get('code', {}) == 16777216
@@ -213,6 +572,14 @@ class BtHomeClient(object):
                 devices.append(device)
 
         return devices
+    
+    @staticmethod
+    def _parse_homehub_response_values(data):
+        result = {}
+        for action in data['reply']['actions']:
+            result[action['callbacks'][0]['xpath']] = action['callbacks'][0]['parameters']['value']
+		
+        return result
 
 
 class Auth:
