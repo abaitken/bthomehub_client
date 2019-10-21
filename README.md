@@ -2,7 +2,8 @@
 
 A Python client that can interact with BT Home Hub routers.
 
-At present, only device listing has been implemented: it returns a list of all connected devices.
+At present, only device listing and some status information has been implemented.
+
 ## Usage
 
 ```python
