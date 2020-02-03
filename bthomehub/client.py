@@ -183,11 +183,9 @@ class BtHomeClient(object):
 
     def get_values(self) -> list:
         """
-        Returns the list of connected devices
+        Returns the list of status values
 
-        :param only_active: a flag indicating whether only currently active (connected) devices should be returned.
-        Default `True`
-        :return: a dictionary containing all the devices connected to the bt home hub
+        :return: a dictionary containing all the status values regarding the bt home hub
         """
 
         if self._authentication is None:
